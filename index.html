@@ -99,15 +99,15 @@ div.tooltip {
 <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js"></script>
 <script> 
-var view = "https://raw.githubusercontent.com/tatornator12/Item-Dependencies-Tree/master/app_data.json";
+var view = "https://raw.githubusercontent.com/cjonesroberts/Item-Dependencies-Tree/master/app_data.json";
 var button = document.getElementById('appButton');
 button.onclick = function() {viewChange(view);};
 app_runner(view);
   
 // Change the data source used in the view
 function viewChange(view) {
- var app_view = "https://raw.githubusercontent.com/tatornator12/Item-Dependencies-Tree/master/app_data.json";
- var layer_view ="https://raw.githubusercontent.com/tatornator12/Item-Dependencies-Tree/master/layer_data.json";
+ var app_view = "https://raw.githubusercontent.com/cjonesroberts/Item-Dependencies-Tree/master/app_data.json";
+ var layer_view ="https://raw.githubusercontent.com/cjonesroberts/Item-Dependencies-Tree/master/layer_data.json";
   
   if (view == app_view) {
     window['view'] = layer_view;
