@@ -1,8 +1,8 @@
 # Portal credentials
-username = ''
-password = ''
+username = 'cjonesroberts_HAPS'
+password = 'G!Srock5!'
 # Portal organization URL
-url = ''
+url = 'https://haps.maps.arcgis.com/'
 
 # Data suffix for output JSON - i.e. 'data' results in app_data.json
 data_name = 'data'

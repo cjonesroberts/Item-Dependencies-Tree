@@ -26,9 +26,13 @@ def mapSearch(map_itemId, item_list):
     '''
     # Get Web Map item
     print(f'     Web Map found: {map_itemId}. Retrieving operational layers.')
-    map_item = gis.content.get(map_itemId)
+    try:
+        map_item = gis.content.get(map_itemId)
+    except Exception as e:
+        map_item = 'Failed'
+        print(f'     ERROR: {map_itemId}. Failed at Retrieving operational layers.')
 
-    if map_item:
+    if map_item and map_item != 'Failed':
         if map_item.type == 'Web Map' or map_item.type == 'Web Scene':
 
             # Build Dictionary for Web Map
@@ -103,20 +107,22 @@ def get_values_recurs(dict_):
 # Search through Web App JSON values for Item IDs and URLs
 def webappSearch(item, item_list):
     # Get all values in JSON of app item
-    all_values = get_values_recurs(item.get_data())
+    try:
+        all_values = get_values_recurs(item.get_data())
 
-    # Search through values for Webmaps and Webpages
-    for value in set(all_values):
-        if str(value).isalnum() is True and len(str(value)) == 32:
-            mapSearch(value, item_list)
-        elif str(value).startswith("http"):
-            webpageSearch(value, item_list)
-
+        # Search through values for Webmaps and Webpages
+        for value in set(all_values):
+            if str(value).isalnum() is True and len(str(value)) == 32:
+                mapSearch(value, item_list)
+            elif str(value).startswith("http"):
+                webpageSearch(value, item_list)
+    except Exception as e:
+        print('Failed')
+        print(e)
 
 # Search for all applications for user
 def get_apps_to_check(username):
-    for app in gis.content.search(query=f'owner:{username}',
-                                  item_type='application', max_items=10000):
+    for app in gis.content.search(query=f'owner:{username}', item_type='application', max_items=10000):
         yield app
 
 
@@ -132,8 +138,7 @@ if __name__ == "__main__":
     print('Connecting to Portal to begin search for applications....')
     # Portal tier auth
     if settings.username:
-        gis = GIS(settings.url, settings.username, settings.password,
-                  verify_cert=False)
+        gis = GIS(settings.url, settings.username, settings.password, verify_cert=False)
     # Web tier auth
     else:
         gis = GIS(settings.url, verify_cert=False)
